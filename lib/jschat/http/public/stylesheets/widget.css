@@ -1,0 +1,30 @@
+#jschat-widget {position: relative; width: 100%; height: 500px; background-color: #f0f0f0; boder: 1px solid #a0a0a0;font-family: 'Lucida Grande', arial, helvetica, sans-serif; color: #111;}
+#jschat-widget h1 {background-color: #ff0000; color: #ffffff; text-align: center; margin: 0px; padding: 0px; font-size: 25px; height: 30px;}
+.jschat-placeholder {background: transparent url(/images/loading.gif) no-repeat 0px 0px; width: 24px; height: 24px;}
+#jschat-header {}
+
+
+
+#jschat-input {position: absolute; bottom: 0px; padding: 5px; width: 100%;}
+#jschat-input form {margin: 0; padding: 0; }
+#jschat-input #jschat-message {width: 100%;}
+
+#jschat-messages { position: absolute; top: 35px; bottom: 50px; width: 100%; margin: 0px; padding: 0; overflow: auto; background-color: #fff; float: left; text-align: left; display: inline; }
+#jschat-messages { list-style-type: none; overflow: auto }
+#jschat-messages li { padding: 0.25em 0; border-bottom: 1px solid #f0f0f0; float: left; width: 100%; line-height: 1.5em; word-wrap: break-word; }
+#jschat-messages span.user { margin: 0; text-align: left; font-weight: bold; display: inline; float: left }
+#jschat-messages .active { color: #000099 }
+#jschat-messages .mentioned { color: #cccc00 }
+#jschat-messages span.time { text-align: left; margin: 0 10px; display: block; float: left; color: #ccc !important; font-style: normal !important }
+#jschat-messages span.message { display: inline; padding: 0 0 0 10px }
+#jschat-messages .help { color: #990000 }
+#jschat-messages .help span.command { width: 12em; display: block; float: left; font-weight: bold }
+#jschat-messages li.server { color: #999; font-style: italic }
+#jschat-messages li.error { color: #990000; font-style: italic; font-weight: bold }
+#jschat-messages li.server span.time,
+#jschat-messages li.error span.time { color: #999 }
+img.inline-image { border: 1px solid #ccc; padding: 2px }
+img.inline-image {
+  max-width: 200px;
+  width: expression(this.width > 200 ? 200: true);
+}

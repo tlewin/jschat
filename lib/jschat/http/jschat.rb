@@ -532,3 +532,74 @@ get '/javascripts/all.js' do
   content_type 'text/javascript'
   secretary.concatenation.to_s
 end
+
+# Widget urls
+get '/widget/identify' do
+  load_and_connect
+  callback = params['callback']
+  unless callback.nil?
+    content_type :js
+    save_last_room params['room']
+    save_nickname params['name']
+    if @bridge.identify params['name'], request.ip
+      resp_json = {'status' => 'ok'}.to_json
+    else
+      resp_json = @bridge.identification_error.to_json
+    end
+    "#{callback}(#{resp_json});"
+  else
+    content_type :json
+    {'status' => 'fail'}.to_json
+  end
+end
+
+get '/widget/join' do
+  load_bridge
+  callback = params['callback']
+  unless callback.nil?
+    content_type :js
+    @bridge.join params['room']
+    save_last_room params['room']
+    save_twitter_user_rooms
+    "#{callback}(#{{'status' => 'ok'}.to_json});"
+  else
+    content_type :json
+    {'status' => 'fail'}.to_json
+  end
+end
+
+get '/widget/message' do
+  load_bridge
+  save_last_room params['to']
+  @bridge.send_message params['message'], params['to']
+  callback = params['callback']
+  unless callback.nil?
+    content_type :js
+    "#{callback}(#{{'status' => 'ok'}.to_json});"
+  else
+    content_type :json
+    {'status' => 'fail'}.to_json
+  end    
+end
+
+get '/widget/messages' do
+  load_bridge
+  callback = params['callback']
+  unless callback.nil?
+    content_type :js
+    if @bridge.active?
+      save_last_room params['room']
+      resp_json = messages_js(remove_my_messages(@bridge.recent_messages(params['room'])))
+    else
+      if @bridge.last_error
+        resp_json = {'status' => 'fail', 'error' => @bridge.last_error}.to_json
+      else
+        resp_json = {'status' => 'fail', 'error' => 'Unknown error'}.to_json
+      end
+    end
+    "#{callback}(#{resp_json});"
+  else
+    content_type :json
+    {'status' => 'fail'}.to_json
+  end
+end
